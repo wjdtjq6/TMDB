@@ -71,7 +71,7 @@ class TrendTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(20)
         }
         uiimageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(uiView)
+            make.top.leading.trailing.equalTo(uiView)//.inset(5)
             make.bottom.equalTo(uiView.snp_bottomMargin).inset(100)
         }
         clipButton.snp.makeConstraints { make in
@@ -129,6 +129,7 @@ class TrendTableViewCell: UITableViewCell {
         //uiimageView.backgroundColor = .red
         uiimageView.layer.cornerRadius = 10
         uiimageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        uiimageView.clipsToBounds = true
         
         //clipButton.setImage(UIImage(systemName: "paperclip.circle.fill"), for: .normal)
 //        clipButton.setImage(UIImage(systemName: "paperclip.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 35)), for: .normal)

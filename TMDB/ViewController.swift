@@ -20,6 +20,7 @@ struct Results: Decodable {
     let release_date: String
     let vote_average: Double
     let genre_ids: [Int]
+    let id: Int
 }
 
 //struct Datas {
@@ -29,7 +30,7 @@ struct Results: Decodable {
 //    let release_date: String
 //    let vote_average: Double
 //}
-
+//genre_ids때문에
 struct Genre: Decodable {
     let genres: [GenreName]
 }
@@ -37,6 +38,8 @@ struct GenreName: Decodable {
     let id: Int
     let name: String
 }
+//id(cast사람들 때문에)
+//struct
 
 class ViewController: UIViewController {
     
@@ -60,6 +63,7 @@ class ViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
+        
         callRequest()
         callRequestGenre()
     }
@@ -73,7 +77,7 @@ class ViewController: UIViewController {
             switch response.result {
             case .success(let value):
                 self.list2 = value.genres
-                print(self.list2)
+                //print(self.list2)
                 //self.tableView.reloadData()
             case .failure(let error):
                 print(error)
@@ -126,7 +130,11 @@ class ViewController: UIViewController {
         
     }
     @objc func rightBarButtonClicked() {
-        
+//        let nav = UINavigationController(rootViewController: SearchViewController())
+//        navigationController?.pushViewController(nav, animated: true)
+        let nav = UINavigationController(rootViewController: SearchViewController())
+        //안됨 navigationController?.pushViewController(nav, animated: true)
+        present(nav, animated: true)
     }
 }
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -143,7 +151,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             for j in 0...18 {
                 if i == list2[j].id {
                     jimmy = jimmy + list2[j].name + " "
-                    print(jimmy, "222222")
+                    //print(jimmy, "222222")
                 }
             }
         }

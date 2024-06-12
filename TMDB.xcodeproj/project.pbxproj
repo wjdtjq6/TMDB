@@ -16,6 +16,8 @@
 		0316E7192C16D1A900E6724D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0316E7182C16D1A900E6724D /* SnapKit */; };
 		0316E71C2C16FD8C00E6724D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0316E71B2C16FD8C00E6724D /* Alamofire */; };
 		0316E71F2C171E8100E6724D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0316E71E2C171E8100E6724D /* Kingfisher */; };
+		0316E72B2C1848F100E6724D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0316E72A2C1848F100E6724D /* SearchViewController.swift */; };
+		0316E72D2C184E8800E6724D /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0316E72C2C184E8800E6724D /* SearchCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		0316E70D2C16C62800E6724D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0316E70F2C16C62800E6724D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0316E7152C16D01D00E6724D /* TrendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendTableViewCell.swift; sourceTree = "<group>"; };
+		0316E72A2C1848F100E6724D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		0316E72C2C184E8800E6724D /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				0316E70C2C16C62800E6724D /* LaunchScreen.storyboard */,
 				0316E70F2C16C62800E6724D /* Info.plist */,
 				0316E7152C16D01D00E6724D /* TrendTableViewCell.swift */,
+				0316E72A2C1848F100E6724D /* SearchViewController.swift */,
+				0316E72C2C184E8800E6724D /* SearchCollectionViewCell.swift */,
 			);
 			path = TMDB;
 			sourceTree = "<group>";
@@ -153,7 +159,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0316E72B2C1848F100E6724D /* SearchViewController.swift in Sources */,
 				0316E7062C16C62600E6724D /* ViewController.swift in Sources */,
+				0316E72D2C184E8800E6724D /* SearchCollectionViewCell.swift in Sources */,
 				0316E7022C16C62600E6724D /* AppDelegate.swift in Sources */,
 				0316E7042C16C62600E6724D /* SceneDelegate.swift in Sources */,
 				0316E7162C16D01D00E6724D /* TrendTableViewCell.swift in Sources */,
