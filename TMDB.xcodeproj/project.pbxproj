@@ -18,6 +18,8 @@
 		0316E71F2C171E8100E6724D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0316E71E2C171E8100E6724D /* Kingfisher */; };
 		0316E72B2C1848F100E6724D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0316E72A2C1848F100E6724D /* SearchViewController.swift */; };
 		0316E72D2C184E8800E6724D /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0316E72C2C184E8800E6724D /* SearchCollectionViewCell.swift */; };
+		033392E82C29712E00383150 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033392E72C29712E00383150 /* DetailViewController.swift */; };
+		033392EA2C29908C00383150 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033392E92C29908C00383150 /* DetailCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		0316E7152C16D01D00E6724D /* TrendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendTableViewCell.swift; sourceTree = "<group>"; };
 		0316E72A2C1848F100E6724D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		0316E72C2C184E8800E6724D /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		033392E72C29712E00383150 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		033392E92C29908C00383150 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				0316E7152C16D01D00E6724D /* TrendTableViewCell.swift */,
 				0316E72A2C1848F100E6724D /* SearchViewController.swift */,
 				0316E72C2C184E8800E6724D /* SearchCollectionViewCell.swift */,
+				033392E72C29712E00383150 /* DetailViewController.swift */,
+				033392E92C29908C00383150 /* DetailCollectionViewCell.swift */,
 			);
 			path = TMDB;
 			sourceTree = "<group>";
@@ -162,9 +168,11 @@
 				0316E72B2C1848F100E6724D /* SearchViewController.swift in Sources */,
 				0316E7062C16C62600E6724D /* ViewController.swift in Sources */,
 				0316E72D2C184E8800E6724D /* SearchCollectionViewCell.swift in Sources */,
+				033392EA2C29908C00383150 /* DetailCollectionViewCell.swift in Sources */,
 				0316E7022C16C62600E6724D /* AppDelegate.swift in Sources */,
 				0316E7042C16C62600E6724D /* SceneDelegate.swift in Sources */,
 				0316E7162C16D01D00E6724D /* TrendTableViewCell.swift in Sources */,
+				033392E82C29712E00383150 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

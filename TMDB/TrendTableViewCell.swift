@@ -141,15 +141,13 @@ class TrendTableViewCell: UITableViewCell {
         gradeLabel.textAlignment = .center
         gradeLabel.backgroundColor = .blue
         
-//        gradeNumberLabel.text = "3.3"
+        gradeNumberLabel.textColor = .black
         gradeNumberLabel.font = .systemFont(ofSize: 12)
         gradeNumberLabel.textAlignment = .center
         gradeNumberLabel.backgroundColor = .white
         
-//        titleLabel.text = "Alice in Borderland"
         titleLabel.font = .boldSystemFont(ofSize: 17)
         
-//        castLabel.text = "qmfqkldalnsdoqwbdqi"
         castLabel.font = .systemFont(ofSize: 14)
         castLabel.textColor = .gray
         

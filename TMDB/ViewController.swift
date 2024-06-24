@@ -130,11 +130,7 @@ class ViewController: UIViewController {
         
     }
     @objc func rightBarButtonClicked() {
-//        let nav = UINavigationController(rootViewController: SearchViewController())
-//        navigationController?.pushViewController(nav, animated: true)
-        let nav = UINavigationController(rootViewController: SearchViewController())
-        //안됨 navigationController?.pushViewController(nav, animated: true)
-        present(nav, animated: true)
+        navigationController?.pushViewController(SearchViewController(), animated: true)
     }
 }
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -151,7 +147,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             for j in 0...18 {
                 if i == list2[j].id {
                     jimmy = jimmy + list2[j].name + " "
-                    //print(jimmy, "222222")
+                    print(jimmy, "222222")
                 }
             }
         }

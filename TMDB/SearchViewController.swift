@@ -17,7 +17,9 @@ struct Search: Decodable {
     let total_results: Int
 }
 struct Result: Decodable {
-    let poster_path: String
+    let poster_path: String?
+    let id: Int
+    let original_title: String
 }
 
 class SearchViewController: UIViewController {
@@ -32,7 +34,7 @@ class SearchViewController: UIViewController {
         let width = UIScreen.main.bounds.width - 40
         layout.itemSize = CGSize(width: width/3, height: width/2)
         layout.minimumInteritemSpacing = 1
-        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return layout
@@ -92,14 +94,9 @@ class SearchViewController: UIViewController {
                 }
                 self.collectionView.reloadData()
                 
-                if self.page == 1 {
-                    //self.collectionView.scrollsToTop = true
+                if self.page == 1 && !self.list.results.isEmpty {
                     self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
                 }
-//                if self.page == 1 {
-//                    //self.tableView.scrollsToTop
-//                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-//                }
             case .failure(let error):
                 print(error)
             }
@@ -110,6 +107,12 @@ class SearchViewController: UIViewController {
 
 }
 extension SearchViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.originalTitle = list.results[indexPath.item].original_title
+        vc.id = list.results[indexPath.item].id
+        navigationController?.pushViewController(vc, animated: true)
+    }
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for i in indexPaths {
             if i.row == list.results.count-2 && page != list.total_pages {
@@ -138,8 +141,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as! SearchCollectionViewCell
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w500"+list.results[indexPath.item].poster_path)
-        cell.imageView.kf.setImage(with: url)
+        if list.results[indexPath.item].poster_path != nil {
+            let url = URL(string: "https://image.tmdb.org/t/p/w500"+list.results[indexPath.item].poster_path!)
+                cell.imageView.kf.setImage(with: url)
+        } else {
+            cell.imageView.image = .none
+        }
         return cell
     }
     
