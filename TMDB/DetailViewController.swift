@@ -30,6 +30,8 @@ class DetailViewController: UIViewController {
     var posterList1:[SimilarResult] = []
     var posterList2:[SimilarResult] = []
     
+    let tableView = UITableView()
+    
     func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         //let width = UIScreen.main.bounds.width
@@ -45,10 +47,15 @@ class DetailViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
-        callRequest1()
-        callRequest2()
+        callRequest(parameter: "/similar") { value in
+            self.posterList1 = value
+            self.collectionView1.reloadData()
+        }
+        callRequest(parameter: "/recommendation") { value in
+            self.posterList2 = value
+            self.collectionView2.reloadData()
+        }
     }
-    
     func configureHierarchy() {
         view.addSubview(titleLable)
         view.addSubview(similarLabel)
@@ -61,6 +68,11 @@ class DetailViewController: UIViewController {
         collectionView2.delegate = self
         collectionView2.dataSource = self
         collectionView2.register(DetailCollectionViewCell.self, forCellWithReuseIdentifier: "DetailCollectionViewCell")
+        
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: DetailTableViewCell.id)
     }
     func configureLayout() {
         titleLable.snp.makeConstraints { make in
@@ -84,53 +96,49 @@ class DetailViewController: UIViewController {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(170)
         }
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     func configureUI() {
         view.backgroundColor = .black
-        
         titleLable.text = originalTitle
         titleLable.font = .boldSystemFont(ofSize: 30)
-        
         similarLabel.text = "비슷한 영화"
         similarLabel.font = .boldSystemFont(ofSize: 20)
-                
         recommendLabel.text = "추천 영화"
         recommendLabel.font = .boldSystemFont(ofSize: 20)
     }
-    func callRequest1() {
+    func callRequest(parameter: String, completion: @escaping ([SimilarResult]) -> Void ) {
         let url = "https://api.themoviedb.org/3/movie/\(id)"
         let headers: HTTPHeaders = [
             "Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NjI1ZGY1ZmMwZjBkMTAxZjI1Y2MzY2NkNjUzMWQ5NSIsIm5iZiI6MTcxOTIyMDg3Ni45NjUwMTksInN1YiI6IjY2NjA2ODFiYzdjMTZiNjhhZjU3NTNiZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CE3TpPMcseKddPWbAAiWRv7s_rlWOZDTxsClf-UWOUc",
             "accept":"application/json"
         ]
-        AF.request(url+"/similar",headers: headers).responseDecodable(of: Similar.self) { response in
+        AF.request(url+parameter,headers: headers).responseDecodable(of: Similar.self) { response in
             switch response.result {
             case .success(let value):
                 print(value)
-                self.posterList1 = value.results
-                self.collectionView1.reloadData()
+                completion(value.results)
             case .failure(let error):
                 print(error)
+                completion([])
             }
         }
     }
-    func callRequest2() {
-        let url = "https://api.themoviedb.org/3/movie/\(id)"
-        let headers: HTTPHeaders = [
-            "Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NjI1ZGY1ZmMwZjBkMTAxZjI1Y2MzY2NkNjUzMWQ5NSIsIm5iZiI6MTcxOTIyMDg3Ni45NjUwMTksInN1YiI6IjY2NjA2ODFiYzdjMTZiNjhhZjU3NTNiZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CE3TpPMcseKddPWbAAiWRv7s_rlWOZDTxsClf-UWOUc",
-            "accept":"application/json"
-        ]
-        AF.request(url+"/recommendations",headers: headers).responseDecodable(of: Similar.self) { response in
-            switch response.result {
-            case .success(let value):
-                print(value)
-                self.posterList2 = value.results
-                self.collectionView2.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        }
+}
+extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        10
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.id, for: indexPath) as! DetailTableViewCell
+        cell.backgroundColor = .purple
+        return cell
+    }
+    
+    
 }
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -141,7 +149,6 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             posterList2.count
         }
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
         if collectionView == collectionView1 {

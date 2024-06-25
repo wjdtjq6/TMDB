@@ -44,7 +44,6 @@ struct GenreName: Decodable {
 class ViewController: UIViewController {
     
     let tableView = UITableView()
-    
     var list: [Results] = [] {
         
         didSet {
@@ -126,11 +125,15 @@ class ViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .systemBackground
     }
+    //temp
     @objc func leftBarButtonClicked() {
-        
+        let vc = TempViewController()
+        vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        present(vc, animated: true)
     }
     @objc func rightBarButtonClicked() {
-        navigationController?.pushViewController(SearchViewController(), animated: true)
+        let vc = SearchViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -144,7 +147,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         var jimmy: String = ""
         for i in list[indexPath.row].genre_ids {
-            for j in 0...18 {
+            print(i)
+            print("_-----")
+            //0...18
+            for j in 0..<list[indexPath.row].genre_ids.count  {
+                print(i,j)
+                print("-------------")
                 if i == list2[j].id {
                     jimmy = jimmy + list2[j].name + " "
                     print(jimmy, "222222")
