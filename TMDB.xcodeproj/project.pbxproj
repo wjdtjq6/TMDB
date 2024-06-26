@@ -22,6 +22,7 @@
 		033392EA2C29908C00383150 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033392E92C29908C00383150 /* DetailCollectionViewCell.swift */; };
 		0333930A2C2AC2BE00383150 /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033393092C2AC2BE00383150 /* TempViewController.swift */; };
 		0333930C2C2AF22500383150 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333930B2C2AF22500383150 /* DetailTableViewCell.swift */; };
+		033393162C2C3F9D00383150 /* TMDBAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033393152C2C3F9D00383150 /* TMDBAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		033392E92C29908C00383150 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		033393092C2AC2BE00383150 /* TempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		0333930B2C2AF22500383150 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
+		033393152C2C3F9D00383150 /* TMDBAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +87,9 @@
 				0316E72C2C184E8800E6724D /* SearchCollectionViewCell.swift */,
 				033392E72C29712E00383150 /* DetailViewController.swift */,
 				033392E92C29908C00383150 /* DetailCollectionViewCell.swift */,
-				033393092C2AC2BE00383150 /* TempViewController.swift */,
 				0333930B2C2AF22500383150 /* DetailTableViewCell.swift */,
+				033393092C2AC2BE00383150 /* TempViewController.swift */,
+				033393152C2C3F9D00383150 /* TMDBAPI.swift */,
 			);
 			path = TMDB;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				0316E72B2C1848F100E6724D /* SearchViewController.swift in Sources */,
 				0316E7062C16C62600E6724D /* ViewController.swift in Sources */,
+				033393162C2C3F9D00383150 /* TMDBAPI.swift in Sources */,
 				0316E72D2C184E8800E6724D /* SearchCollectionViewCell.swift in Sources */,
 				033392EA2C29908C00383150 /* DetailCollectionViewCell.swift in Sources */,
 				0316E7022C16C62600E6724D /* AppDelegate.swift in Sources */,

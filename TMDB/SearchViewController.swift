@@ -110,7 +110,7 @@ extension SearchViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
         vc.originalTitle = list.results[indexPath.item].original_title
-        vc.id = list.results[indexPath.item].id
+        TMDBAPI.id = list.results[indexPath.item].id
         navigationController?.pushViewController(vc, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

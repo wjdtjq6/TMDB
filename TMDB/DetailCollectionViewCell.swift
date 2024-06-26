@@ -10,6 +10,7 @@ import SnapKit
 
 class DetailCollectionViewCell: UICollectionViewCell {
     let imageView = UIImageView()
+    static let id = "DetailCollectionViewCell"
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)

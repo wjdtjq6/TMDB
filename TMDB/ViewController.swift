@@ -77,7 +77,7 @@ class ViewController: UIViewController {
             case .success(let value):
                 self.list2 = value.genres
                 //print(self.list2)
-                //self.tableView.reloadData()
+                self.tableView.reloadData()
             case .failure(let error):
                 print(error)
             }
@@ -150,7 +150,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             print(i)
             print("_-----")
             //0...18
-            for j in 0..<list[indexPath.row].genre_ids.count  {
+            for j in 0...18  {
                 print(i,j)
                 print("-------------")
                 if i == list2[j].id {
