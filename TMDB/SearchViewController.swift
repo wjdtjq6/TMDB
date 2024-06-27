@@ -118,7 +118,6 @@ extension SearchViewController: UICollectionViewDataSourcePrefetching {
             if i.row == list.results.count-2 && page != list.total_pages {
                 page += 1
                 callRequest(query: searchBar.text!)
-                print("1111111")
             }
         }
         

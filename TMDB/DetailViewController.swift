@@ -22,35 +22,41 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let group = DispatchGroup()
+        
         group.enter() //+1
         DispatchQueue.global().async(group: group) {
             TMDBAPI.shared.callRequest(parameter: "/similar") { success,fail in
-                if let fail = fail {
+                if let fail = fail {//if fail == nil { //fail이 nil이면 실패
                     print(fail)
-                }else {
-                    guard let success = success else { return }
+                    print(1)
+                }
+                else { //아니면 성공
+                    print(2)
+                    guard let success = success else { //success가 닐이면 실패 => 3
+                        print(3)
+                        return }
+                    print(4)//success가 닐이 아니면 = 성공
                     self.posterLists[0] = success
                 }
-                print("11111")
+                print(5)
                 group.leave() //-1
+                
             }
         }
         
         group.enter() //+1
         DispatchQueue.global().async(group: group) {
             TMDBAPI.shared.callRequest(parameter: "/recommendations") { movie, error in
-                if let error = error {
-                    print(error)
-                }else {
-                    guard let movie = movie else { return }
-                    self.posterLists[1] = movie
-                }
-                print("22222")
-                group.leave() //-1            }
+                guard let movie = movie else {/*movie가 nil이면 안으로*/return }
+                self.posterLists[1] = movie//emovie가 nil이 아니면
+                group.leave() //-1
             }
         }
-        group.notify(queue: .main) {
+        
+        group.notify(queue: .main) { // 0dl ehlaus
             self.tableView.reloadData()
+            print(self.posterLists)
+            print(self.posterLists[0])
             print("333333")
         }
         configureHierarchy()
@@ -103,7 +109,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCollectionViewCell.id, for: indexPath) as! DetailCollectionViewCell
-        let data = posterLists[collectionView.tag][indexPath.item].poster_path
+        let data = posterLists[collectionView.tag][indexPath.item].poster_path        
         let url = URL(string: "https://image.tmdb.org/t/p/w500"+data)
         cell.imageView.kf.setImage(with: url)
         return cell

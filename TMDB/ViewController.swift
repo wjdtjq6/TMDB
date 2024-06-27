@@ -76,7 +76,6 @@ class ViewController: UIViewController {
             switch response.result {
             case .success(let value):
                 self.list2 = value.genres
-                //print(self.list2)
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
@@ -85,13 +84,9 @@ class ViewController: UIViewController {
     }
     func callRequest() {
         AF.request(url,method: .get).responseDecodable(of: Movie_Week.self) { response in
-            
-            print(response.response?.statusCode ?? 0)
-            
             switch response.result {
             case .success(let value):
                 self.list = value.results
-                //print(self.list)
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
@@ -117,8 +112,8 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
         tableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view)
+            make.edges.equalTo(view)//.safeAreaLayoutGuide)
+            //make.bottom.equalTo(view)
         }
         tableView.rowHeight = 400
     }
@@ -150,10 +145,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             print(i)
             print("_-----")
             //0...18
-            for j in 0...18  {
-                print(i,j)
+            for j in 0..<list2.count  {
                 print("-------------")
                 if i == list2[j].id {
+                    print(i,list2[j].id)
+
                     jimmy = jimmy + list2[j].name + " "
                     print(jimmy, "222222")
                 }
