@@ -62,7 +62,7 @@ class TrendTableViewCell: UITableViewCell {
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(15)
         }
         hashtagLabel.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp_bottomMargin).offset(5)
+            make.top.equalTo(dateLabel.snp_bottomMargin).offset(10)
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(15)
         }
         uiView.snp.makeConstraints { make in

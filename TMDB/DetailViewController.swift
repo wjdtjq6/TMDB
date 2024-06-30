@@ -13,44 +13,49 @@ import Kingfisher
 class DetailViewController: UIViewController {
     let titleLable = UILabel()
     var originalTitle = ""
-    var posterList1:[SimilarResult] = []
-    var posterList2:[SimilarResult] = []
-    var posterLists:[[SimilarResult]] = [[],[]]
+    var posterList1:[SimilarOrRecommendResult] = []
+    var posterList2:[SimilarOrRecommendResult] = []
+    var posterLists:[[SimilarOrRecommendResult]] = [[],[]]
     let tableView = UITableView()
     let textList = ["비슷한 영화","추천 영화"]
-    
+    var id = 0
+    var searchResultList = [Result]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let group = DispatchGroup()
         
         group.enter() //+1
         DispatchQueue.global().async(group: group) {
-            TMDBAPI.shared.callRequest(parameter: "/similar") { success,fail in
-                if let fail = fail {//if fail == nil { //fail이 nil이면 실패
-                    print(fail)
-                    print(1)
-                }
-                else { //아니면 성공
-                    print(2)
-                    guard let success = success else { //success가 닐이면 실패 => 3
-                        print(3)
-                        return }
-                    print(4)//success가 닐이 아니면 = 성공
-                    self.posterLists[0] = success
-                }
-                print(5)
-                group.leave() //-1
-                
+            TMDBAPI.shared.request(api: .detail(id: self.id), model: SimilarOrRecommend.self) { value in
+                self.posterLists[0] = value.results
             }
+//            TMDBAPI.shared.callRequest(parameter: "/similar") { success,fail in
+//                if let fail = fail {//if fail == nil { //fail이 nil이면 실패
+//                    print(fail)
+//                    print(1)
+//                }
+//                else { //아니면 성공
+//                    print(2)
+//                    guard let success = success else { //success가 닐이면 실패 => 3
+//                        print(3)
+//                        return }
+//                    print(4)//success가 닐이 아니면 = 성공
+//                    self.posterLists[0] = success
+//                }
+//                print(5)
+//                group.leave() //-1
+//                
+//            }
         }
         
         group.enter() //+1
         DispatchQueue.global().async(group: group) {
-            TMDBAPI.shared.callRequest(parameter: "/recommendations") { movie, error in
-                guard let movie = movie else {/*movie가 nil이면 안으로*/return }
-                self.posterLists[1] = movie//emovie가 nil이 아니면
-                group.leave() //-1
-            }
+//            TMDBAPI.shared.callRequest(parameter: "/recommendations") { movie, error in
+//                guard let movie = movie else {/*movie가 nil이면 안으로*/return }
+//                self.posterLists[1] = movie//emovie가 nil이 아니면
+//                group.leave() //-1
+//            }
         }
         
         group.notify(queue: .main) { // 0dl ehlaus
