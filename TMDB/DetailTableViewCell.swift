@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class DetailTableViewCell: UITableViewCell {
+final class DetailTableViewCell: UITableViewCell {
     static let id = "DetailTableViewCell"
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())

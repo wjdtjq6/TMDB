@@ -10,15 +10,15 @@ import SnapKit
 import Alamofire
 import Kingfisher
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
-    let tableView = UITableView()
-    var trendingMovieList: [TrendingMovieResults] = [] {
+    private let tableView = UITableView()
+    private var trendingMovieList: [TrendingMovieResults] = [] {
         didSet {
             tableView.reloadData()
         }
     }
-    var genreList: [GenreName] = []
+    private var genreList: [GenreName] = []
     //let url = "https://api.themoviedb.org/3/trending/movie/week?api_key=7625df5fc0f0d101f25cc3ccd6531d95"
     //let url2 = "https://api.themoviedb.org/3/genre/movie/list"
     override func viewDidLoad() {
@@ -27,27 +27,39 @@ class ViewController: UIViewController {
         /* 오잉 1111밖에 프린트가 안됨 */
         //callRequest()
         print("1111")
-        TMDBAPI.shared.request(api: .trendingMovie, model: TrendingMovie.self) { value in
-            self.trendingMovieList = value.results
+        TMDBAPI.shared.request(api: .trendingMovie, model: TrendingMovie.self) { success,fail  in
+            if let fail {
+                print(fail)
+            }
+            else {
+                guard let success else { return }
+                self.trendingMovieList = success.results
+            }
         }
         print("2222")
         //callRequestGenre()
-        TMDBAPI.shared.request(api: .trendingMovieGenre, model: Genre.self) { value in
-            self.genreList = value.genres
+        TMDBAPI.shared.request(api: .trendingMovieGenre, model: Genre.self) { success, fail in
+            if let fail {
+                print(fail)
+            }
+            else {
+                guard let success else { return }
+                self.genreList = success.genres
+            }
         }
         print("33333")
         configureHierarchy()
         configureLayout()
         configureUI()
     }
-    func configureHierarchy() {
+    private func configureHierarchy() {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
         tableView.register(TrendTableViewCell.self, forCellReuseIdentifier: "TrendTableViewCell")
         tableView.separatorStyle = .none
     }
-    func configureLayout() {
+    private func configureLayout() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(leftBarButtonClicked))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
         let appearance = UINavigationBarAppearance()
@@ -58,16 +70,15 @@ class ViewController: UIViewController {
         }
         tableView.rowHeight = 400
     }
-    func configureUI() {
-        view.backgroundColor = .systemBackground
+    private func configureUI() {
+        //view.backgroundColor = .systemBackground
     }
     //temp
-    @objc func leftBarButtonClicked() {
+    @objc private func leftBarButtonClicked() {
         let vc = TempViewController()
-        vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         present(vc, animated: true)
     }
-    @objc func rightBarButtonClicked() {
+    @objc private func rightBarButtonClicked() {
         let vc = SearchViewController()
         navigationController?.pushViewController(vc, animated: true)
     }

@@ -9,11 +9,11 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class CreditViewController: UIViewController {
-    let bigImage = UIImageView()
-    let titleLabel = UILabel()
-    let smallImage = UIImageView()
-    let tableView = UITableView()
+final class CreditViewController: UIViewController {
+    private let bigImage = UIImageView()
+    private let titleLabel = UILabel()
+    private let smallImage = UIImageView()
+    private let tableView = UITableView()
     var Movietitle = ""
     var id = 0
     var overview = ""
@@ -22,15 +22,20 @@ class CreditViewController: UIViewController {
     var posterImage = ""
     override func viewDidLoad() {
         navigationItem.title = "출연/제작"
-        TMDBAPI.shared.request(api: .trendigCredit(id: id), model: MovieCredit.self) { value in
-            self.movieCreditList = value.cast
-            self.tableView.reloadData()
+        TMDBAPI.shared.request(api: .creditRecommendSimilarVideos(id: id, endPoint: "credits"), model: MovieCredit.self) { success, fail in
+            if let fail {
+                print(fail)
+            } else {
+                guard let success else { return }
+                self.movieCreditList = success.cast
+                self.tableView.reloadData()
+            }
         }
         configureHierarchy()
         configurerLayout()
         configureUI()
     }
-    func configureHierarchy() {
+    private func configureHierarchy() {
         view.addSubview(bigImage)
         view.addSubview(titleLabel)
         view.addSubview(smallImage)
@@ -39,7 +44,7 @@ class CreditViewController: UIViewController {
         tableView.delegate = self
         tableView.register(CreditTableViewCell.self, forCellReuseIdentifier: CreditTableViewCell.id)
     }
-    func configurerLayout() {
+    private func configurerLayout() {
         bigImage.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(200)
@@ -60,8 +65,8 @@ class CreditViewController: UIViewController {
             make.trailing.bottom.equalTo(view)
         }
     }
-    func configureUI() {
-        view.backgroundColor = .white
+    private func configureUI() {
+        view.backgroundColor = .systemBackground
         let url1 = URL(string: "https://image.tmdb.org/t/p/w500"+backImage)
         bigImage.kf.setImage(with: url1)
         //bigImage.alpha = 0.5 view를 추가해서 백그라운드 블랙으로!!

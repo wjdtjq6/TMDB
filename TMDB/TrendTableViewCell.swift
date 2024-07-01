@@ -8,21 +8,21 @@
 import UIKit
 import SnapKit
 
-class TrendTableViewCell: UITableViewCell {
+final class TrendTableViewCell: UITableViewCell {
 
     let dateLabel = UILabel()
     let hashtagLabel = UILabel()
     
-    let uiView = UIView()
+    private let uiView = UIView()
     let uiimageView = UIImageView()
     let clipButton = UIButton()
-    let gradeLabel = UILabel()
+    private let gradeLabel = UILabel()
     let gradeNumberLabel = UILabel()
     
     let titleLabel = UILabel()
     let castLabel = UILabel()
-    let separator = UIView()
-    let detailButton = UIButton(type: .system)
+    private let separator = UIView()
+    private let detailButton = UIButton(type: .system)
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,7 +41,7 @@ class TrendTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func configureHierarchy() {
+    private func configureHierarchy() {
         contentView.addSubview(dateLabel)
         contentView.addSubview(hashtagLabel)
         
@@ -56,7 +56,7 @@ class TrendTableViewCell: UITableViewCell {
         contentView.addSubview(separator)
         contentView.addSubview(detailButton)
     }
-    func configureLayout() {
+    private func configureLayout() {
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(15)
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(15)
@@ -111,7 +111,7 @@ class TrendTableViewCell: UITableViewCell {
             make.trailing.equalTo(uiView).inset(15)
         }
     }
-    func configureUI() {
+    private func configureUI() {
         dateLabel.font = .boldSystemFont(ofSize: 14)
         dateLabel.textColor = .gray
         

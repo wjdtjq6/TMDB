@@ -55,9 +55,20 @@ struct SimilarOrRecommend:Decodable {
 }
 struct SimilarOrRecommendResult:Decodable {
     let poster_path: String
+    let id: Int
 }
-
-
+struct Youtube: Decodable {
+    let results: [YoutubeKeys]
+}
+struct YoutubeKeys: Decodable {
+    let key: String
+}
+enum JimmyError {
+    case failRequest
+    case noData
+    case invalidRequest
+    case invalidData
+}
 class TMDBAPI {
     static let shared = TMDBAPI()
     private init() {}
@@ -67,15 +78,14 @@ class TMDBAPI {
     //var movieCreditList = [Cast]()
     //var searchList = Search.init(page: 1, results: [], total_pages: 0, total_results: 0)
     //var searchResultList = [Result]()
-    var similarOrrecommendList = [SimilarOrRecommendResult]()
+    //var similarOrrecommendList = [SimilarOrRecommendResult]()
     
-    //typealias CompletionHandler = ([SimilarResult]?, String?) -> Void
-    func request<T: Decodable>(api: TMDBRequest, model: T.Type, completionHandler: @escaping (T) -> Void) {
+    func request<T: Decodable>(api: TMDBRequest, model: T.Type, completionHandler: @escaping (T?, JimmyError?) -> Void) {
         AF.request(api.endPoint, method: .get, parameters: api.parameter, encoding: URLEncoding(destination: .queryString), headers: api.header).responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let value):
                 print("성공")
-                completionHandler(value)
+                completionHandler(value, nil)
                 print("값 전달도 성공")
             case .failure(let error):
                 print(error)

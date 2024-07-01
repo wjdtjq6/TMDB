@@ -11,9 +11,8 @@ import Alamofire
 enum TMDBRequest {
     case trendingMovie
     case trendingMovieGenre
-    case trendigCredit(id: Int)
     case search(query: String, page: Int, size: Int)
-    case detail(id: Int)
+    case creditRecommendSimilarVideos(id: Int, endPoint: String)
     var BaseUrl: String {
         return "https://api.themoviedb.org/3/"
     }
@@ -23,12 +22,10 @@ enum TMDBRequest {
             return BaseUrl + "/trending/movie/day"
         case .trendingMovieGenre:
             return BaseUrl + "genre/movie/list"
-        case .trendigCredit(let id):
-            return BaseUrl + "/movie/\(id)/credits"
         case .search:
             return BaseUrl + "/search/movie"
-        case .detail(let id):
-            return BaseUrl + "movie/\(id)/recommendations"
+        case .creditRecommendSimilarVideos(let id, let endPoint):
+            return BaseUrl + "movie/\(id)/\(endPoint)"
         }
     }
     var header: HTTPHeaders {
@@ -41,7 +38,7 @@ enum TMDBRequest {
     }
     var parameter: Parameters {
         switch self {
-        case .trendingMovie, .trendingMovieGenre, .trendigCredit, .detail:
+        case .trendingMovie, .trendingMovieGenre, .creditRecommendSimilarVideos:
             return ["language": "ko-KR"]
         case .search(let query, let page, let size):
             return [

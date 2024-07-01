@@ -11,64 +11,55 @@ import Alamofire
 import Kingfisher
 
 class DetailViewController: UIViewController {
-    let titleLable = UILabel()
+    private let titleLable = UILabel()
     var originalTitle = ""
-    var posterList1:[SimilarOrRecommendResult] = []
-    var posterList2:[SimilarOrRecommendResult] = []
-    var posterLists:[[SimilarOrRecommendResult]] = [[],[]]
-    let tableView = UITableView()
-    let textList = ["비슷한 영화","추천 영화"]
+    private var posterList1:[SimilarOrRecommendResult] = []
+    private var posterList2:[SimilarOrRecommendResult] = []
+    private var posterLists:[[SimilarOrRecommendResult]] = [[],[]]
+    private let tableView = UITableView()
+    private let textList = ["비슷한 영화","추천 영화"]
     var id = 0
-    var searchResultList = [Result]()
-
+    private var searchResultList = [Result]()
+    private var idList: [[SimilarOrRecommendResult]] = [[],[]]
     override func viewDidLoad() {
         super.viewDidLoad()
         let group = DispatchGroup()
-        
         group.enter() //+1
         DispatchQueue.global().async(group: group) {
-            TMDBAPI.shared.request(api: .detail(id: self.id), model: SimilarOrRecommend.self) { value in
-                self.posterLists[0] = value.results
+            TMDBAPI.shared.request(api: .creditRecommendSimilarVideos(id: self.id, endPoint: "similar"), model: SimilarOrRecommend.self) { success,fail  in
+                if let fail {
+                    print(fail)
+                }
+                else {
+                    guard let success else { return }
+                    self.posterLists[0] = success.results
+                    self.idList[0] = success.results
+                }
+                group.leave()//-1
             }
-//            TMDBAPI.shared.callRequest(parameter: "/similar") { success,fail in
-//                if let fail = fail {//if fail == nil { //fail이 nil이면 실패
-//                    print(fail)
-//                    print(1)
-//                }
-//                else { //아니면 성공
-//                    print(2)
-//                    guard let success = success else { //success가 닐이면 실패 => 3
-//                        print(3)
-//                        return }
-//                    print(4)//success가 닐이 아니면 = 성공
-//                    self.posterLists[0] = success
-//                }
-//                print(5)
-//                group.leave() //-1
-//                
-//            }
         }
-        
         group.enter() //+1
         DispatchQueue.global().async(group: group) {
-//            TMDBAPI.shared.callRequest(parameter: "/recommendations") { movie, error in
-//                guard let movie = movie else {/*movie가 nil이면 안으로*/return }
-//                self.posterLists[1] = movie//emovie가 nil이 아니면
-//                group.leave() //-1
-//            }
+            TMDBAPI.shared.request(api: .creditRecommendSimilarVideos(id: self.id, endPoint: "recommendations"), model: SimilarOrRecommend.self) { success,fail  in
+                    if let fail {
+                        print(fail)
+                    }
+                    else {
+                        guard let success else { return }
+                        self.posterLists[1] = success.results
+                        self.idList[1] = success.results
+                    }
+                    group.leave()//-1
+            }
         }
-        
         group.notify(queue: .main) { // 0dl ehlaus
             self.tableView.reloadData()
-            print(self.posterLists)
-            print(self.posterLists[0])
-            print("333333")
         }
         configureHierarchy()
         configureLayout()
         configureUI()
     }
-    func configureHierarchy() {
+    private func configureHierarchy() {
         view.addSubview(titleLable)
         view.addSubview(tableView)
         tableView.delegate = self
@@ -76,7 +67,7 @@ class DetailViewController: UIViewController {
         tableView.rowHeight = 200
         tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: DetailTableViewCell.id)
     }
-    func configureLayout() {
+    private func configureLayout() {
         titleLable.snp.makeConstraints { make in
             make.top.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
         }
@@ -85,7 +76,8 @@ class DetailViewController: UIViewController {
             make.horizontalEdges.bottom.equalTo(view)
         }
     }
-    func configureUI() {
+    private func configureUI() {
+        view.backgroundColor = .systemBackground
         titleLable.text = originalTitle
         titleLable.font = .boldSystemFont(ofSize: 30)
     }
@@ -105,10 +97,19 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         cell.collectionView.reloadData()
         return cell
     }
-    
-    
 }
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = YoutuViewController()
+        if indexPath.row == 0 {
+            vc.id = idList[0][indexPath.item].id
+        }
+        else {
+            vc.id = idList[1][indexPath.item].id
+        }
+        print(indexPath)
+        navigationController?.pushViewController(vc, animated: true)
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         posterLists[collectionView.tag].count
     }
